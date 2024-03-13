@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_charactersListFragment"
+            app:destination="@id/charactersListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/charactersListFragment"
+        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.CharactersListFragment"
+        android:label="fragment_characters_list_fragment"
+        tools:layout="@layout/fragment_characters_list" >
+        <action
+            android:id="@+id/action_charactersListFragment_to_eventListFragment"
+            app:destination="@id/eventsListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/eventsListFragment"
+        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.EventsListFragment"
+        android:label="fragment_event_list"
+        tools:layout="@layout/fragment_event_list" >
+        <action
+            android:id="@+id/action_eventsListFragment_to_charactersListFragment"
+            app:destination="@id/charactersListFragment" />
+    </fragment>
+
+</navigation>
