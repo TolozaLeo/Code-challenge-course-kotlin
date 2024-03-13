@@ -29,10 +29,12 @@
             android:value="@string/facebook_application_id"/>
         <meta-data android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token"/>
-
-        <meta-data
-            android:name="BASE_URL"
+        <meta-data android:name="BASE_URL"
             android:value="${BASE_URL}" />
+        <meta-data android:name="PRIVATE_KEY_AVENGERS_API"
+            android:value="${PRIVATE_KEY_AVENGERS_API}" />
+        <meta-data android:name="PUBLIC_KEY_AVENGERS_API"
+            android:value="${PUBLIC_KEY_AVENGERS_API}" />
     </application>
 
 </manifest>

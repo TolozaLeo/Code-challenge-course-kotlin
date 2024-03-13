@@ -1,16 +1,17 @@
 package com.cursokotlin.codechallenge.data.service.security
 
+import com.cursokotlin.codechallenge.BuildConfig.PRIVATE_KEY_AVENGERS_API
+import com.cursokotlin.codechallenge.BuildConfig.PUBLIC_KEY_AVENGERS_API
+import com.cursokotlin.codechallenge.data.service.TIME_STAMP
 import okhttp3.internal.and
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import com.cursokotlin.codechallenge.BuildConfig
-import com.cursokotlin.codechallenge.data.service.TIME_STAMP
 
 class AvengersHasKeyBuilder : HashKeyBuilder{
     override fun build(): String? {
         val timeStamp = TIME_STAMP
-        val publicKey = BuildConfig.PUBLIC_KEY_AVENGERS_API
-        val privateKey = BuildConfig.PRIVATE_KEY_AVENGERS_API
+        val publicKey = PUBLIC_KEY_AVENGERS_API
+        val privateKey = PRIVATE_KEY_AVENGERS_API
 
         val messageToHash = "$timeStamp$privateKey$publicKey"
         return getMd5(messageToHash)

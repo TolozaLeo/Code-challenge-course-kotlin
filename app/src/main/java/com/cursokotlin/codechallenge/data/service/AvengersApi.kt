@@ -2,6 +2,7 @@ package com.cursokotlin.codechallenge.data.service
 
 import android.util.Log
 import com.cursokotlin.codechallenge.BuildConfig
+import com.cursokotlin.codechallenge.BuildConfig.PUBLIC_KEY_AVENGERS_API
 import com.cursokotlin.codechallenge.data.response.CharactersResponse
 import com.cursokotlin.codechallenge.data.service.security.HashKeyBuilder
 import javax.inject.Inject
@@ -21,7 +22,7 @@ class AvengersApi @Inject constructor(
             hashKeyBuilder.build()
         }
 
-    private val publicKey = BuildConfig.PUBLIC_KEY_AVENGERS_API
+    private val publicKey = PUBLIC_KEY_AVENGERS_API
 
     suspend fun getCharacters(page: Int = 0): Result<CharactersResponse> {
         val hash = hashKey
