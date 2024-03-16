@@ -1,15 +1,11 @@
 package com.cursokotlin.codechallenge.presentation.ui.activities
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.cursokotlin.codechallenge.R
 import com.cursokotlin.codechallenge.databinding.ActivityMainBinding
@@ -71,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        navController.navigate(R.id.charactersListFragment)
+        navController.navigate(R.id.charactersFragment)
         return true
     }
 
@@ -88,8 +84,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val TOP_LEVEL_DESTINATIONS = setOf(
-            R.id.charactersListFragment,
-            R.id.eventsListFragment
+            R.id.charactersFragment,
+            R.id.eventsFragment
         )
     }
 }

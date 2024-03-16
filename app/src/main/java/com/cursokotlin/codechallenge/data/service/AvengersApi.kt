@@ -16,7 +16,6 @@ class AvengersApi @Inject constructor(
     private val hashKeyBuilder: HashKeyBuilder,
     private val handleHttpErrors: HandleHttpErrors
 ){
-
     private val hashKey: String? = null
         get() = field ?: run {
             hashKeyBuilder.build()

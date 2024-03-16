@@ -11,28 +11,40 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_charactersListFragment"
-            app:destination="@id/charactersListFragment" />
+            android:id="@+id/action_loginFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/charactersListFragment"
-        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.CharactersListFragment"
-        android:label="fragment_characters_list_fragment"
-        tools:layout="@layout/fragment_characters_list" >
+        android:id="@+id/charactersFragment"
+        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.HomeFragment"
+        tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_charactersListFragment_to_eventListFragment"
-            app:destination="@id/eventsListFragment" />
+            android:id="@+id/action_charactersFragment_to_eventsFragment"
+            app:destination="@id/eventsFragment" />
+        <action
+            android:id="@+id/action_charactersFragment_to_descriptionFragment"
+            app:destination="@id/descriptionFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/eventsListFragment"
-        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.EventsListFragment"
-        android:label="fragment_event_list"
-        tools:layout="@layout/fragment_event_list" >
+        android:id="@+id/eventsFragment"
+        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.EventsFragment"
+        tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_eventsListFragment_to_charactersListFragment"
-            app:destination="@id/charactersListFragment" />
+            android:id="@+id/action_eventsFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/descriptionFragment"
+        android:name="com.cursokotlin.codechallenge.DescriptionFragment"
+        android:label="fragment_description"
+        tools:layout="@layout/fragment_description" >
+        <action
+            android:id="@+id/action_descriptionFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment"
+            app:popUpTo="@id/charactersFragment"/>
     </fragment>
 
 </navigation>

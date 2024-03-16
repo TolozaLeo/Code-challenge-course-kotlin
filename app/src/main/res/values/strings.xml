@@ -23,9 +23,13 @@
     <string name="appears_in_these_comics">Appears in these comics</string>
     <string name="comic_to_discuss">Comics to discuss</string>
 
-<!--    TODO ELIMINATE UNUSED STRINGS-->
+    <!--    TODO ELIMINATE UNUSED STRINGS-->
     <string name="hello_login_fragment">LOGIN FRAGMENT</string>
     <string name="hello_characters_list_fragment">CHARACTERS FRAGMENT</string>
     <string name="hello_event_list_fragment">EVENTS FRAGMENT</string>
+
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -7,6 +7,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -20,9 +21,6 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-////        TODO CHANGE TO GRADLE.PROPERTIES THE VALUE OF THE API KEYS
-//        buildConfigField ("String", "PRIVATE_KEY_AVENGERS_API", "\"db7812218995387fedf445ee6b5ed6e20f3695cb\"")
-//        buildConfigField ("String", "PUBLIC_KEY_AVENGERS_API", "\"1e51156a378b9414ba5906edc555374d\"")
     }
 
     buildFeatures {
