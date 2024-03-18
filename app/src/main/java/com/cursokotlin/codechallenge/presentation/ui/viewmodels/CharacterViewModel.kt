@@ -11,6 +11,7 @@ import com.cursokotlin.codechallenge.data.internal.ServerError
 import com.cursokotlin.codechallenge.data.internal.getGenericError
 import com.cursokotlin.codechallenge.data.repository.AvengersRepository
 import com.cursokotlin.codechallenge.data.response.Character
+import com.cursokotlin.codechallenge.presentation.ui.viewmodels.uimodels.CharactersUiModel
 import com.cursokotlin.codechallenge.utils.Event
 import com.cursokotlin.codechallenge.utils.replaceHttpForHttps
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,10 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-data class CharactersUiModel (
-    val showCharactersList: Event<List<CharacterAdapterItem>>? = null,
-    val showError: Event<ServerError?>? = null,
-)
+
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(

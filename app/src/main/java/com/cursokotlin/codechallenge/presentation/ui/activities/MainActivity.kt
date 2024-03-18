@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.loginFragment -> shouldShowNavComponents(false)
 
-
                 else -> {
                     shouldShowNavComponents(true)
                     binding.toolbar.title = getString(R.string.toolbar_title)

@@ -1,6 +1,7 @@
 package com.cursokotlin.codechallenge.data.response
 
 import com.squareup.moshi.Json
+import java.sql.Date
 
 class EventsResponse(
     @Json(name = "data") val data: DataEvent

@@ -4,14 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cursokotlin.codechallenge.R
+import com.cursokotlin.codechallenge.presentation.ui.viewmodels.uimodels.MainUiModel
 import com.cursokotlin.codechallenge.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-data class MainUiModel(
-    val navigateToCharactersFragment: Event<Unit?>? = null,
-    val navigateToEventsFragment: Event<Unit?>? = null,
-)
+
 
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {

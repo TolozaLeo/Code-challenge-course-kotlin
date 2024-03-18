@@ -17,14 +17,14 @@
 
     <fragment
         android:id="@+id/charactersFragment"
-        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.HomeFragment"
+        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.CharactersFragment"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_charactersFragment_to_eventsFragment"
             app:destination="@id/eventsFragment" />
         <action
             android:id="@+id/action_charactersFragment_to_descriptionFragment"
-            app:destination="@id/descriptionFragment" />
+            app:destination="@id/charactersDescriptionFragment" />
     </fragment>
 
     <fragment
@@ -37,12 +37,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/descriptionFragment"
-        android:name="com.cursokotlin.codechallenge.DescriptionFragment"
+        android:id="@+id/charactersDescriptionFragment"
+        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.CharactersDescriptionFragment"
         android:label="fragment_description"
-        tools:layout="@layout/fragment_description" >
+        tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_descriptionFragment_to_charactersFragment"
+            android:id="@+id/action_CharactersDescriptionFragment_to_charactersFragment"
             app:destination="@id/charactersFragment"
             app:popUpTo="@id/charactersFragment"/>
     </fragment>

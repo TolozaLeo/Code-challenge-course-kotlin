@@ -6,9 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cursokotlin.codechallenge.data.adapteritems.EventAdapterItem
 import com.cursokotlin.codechallenge.databinding.FragmentHomeBinding
+import com.cursokotlin.codechallenge.presentation.ui.adapters.EventsListAdapter
+import com.cursokotlin.codechallenge.presentation.ui.viewmodels.EventsViewModel
 import com.cursokotlin.codechallenge.presentation.ui.viewmodels.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +23,9 @@ class EventsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val mainViewModel : MainViewModel by activityViewModels()
+    private val viewModel : EventsViewModel by viewModels()
+
+    private lateinit var adapter : EventsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +39,7 @@ class EventsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
+        viewModel.getEvents()
     }
 
     private fun setupObservers() {
@@ -38,11 +48,33 @@ class EventsFragment : Fragment() {
                 navigateToCharactersFragment()
             }
         }
+
+        viewModel.uiState.observe(viewLifecycleOwner){
+            it.showEventsList?.getContentIfNotHandled()?.let { eventsList ->
+                setupRecyclerView(eventsList)
+            }
+            it.showError?.getContentIfNotHandled()?.let { error ->
+                showSnackbar(error.message)
+            }
+        }
+    }
+
+    private fun setupRecyclerView(eventsList: List<EventAdapterItem>) {
+        adapter = EventsListAdapter()
+        adapter.submitList(eventsList)
+
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun navigateToCharactersFragment() {
         val action = EventsFragmentDirections.actionEventsFragmentToCharactersFragment()
         findNavController().navigate(action)
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {
