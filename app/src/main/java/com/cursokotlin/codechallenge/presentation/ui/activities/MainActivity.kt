@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
 
                 else -> {
                     shouldShowNavComponents(true)
-                    binding.toolbar.title = getString(R.string.toolbar_title)
                 }
             }
         }

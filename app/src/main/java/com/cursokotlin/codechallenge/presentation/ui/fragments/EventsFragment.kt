@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cursokotlin.codechallenge.data.adapteritems.EventAdapterItem
+import com.cursokotlin.codechallenge.data.internal.adapteritems.EventAdapterItem
 import com.cursokotlin.codechallenge.databinding.FragmentHomeBinding
 import com.cursokotlin.codechallenge.presentation.ui.adapters.EventsListAdapter
 import com.cursokotlin.codechallenge.presentation.ui.viewmodels.EventsViewModel
@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EventsFragment : Fragment() {
+class EventsFragment : BaseFragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -54,7 +54,7 @@ class EventsFragment : Fragment() {
                 setupRecyclerView(eventsList)
             }
             it.showError?.getContentIfNotHandled()?.let { error ->
-                showSnackbar(error.message)
+                showServerError(error)
             }
         }
     }
@@ -71,10 +71,6 @@ class EventsFragment : Fragment() {
     private fun navigateToCharactersFragment() {
         val action = EventsFragmentDirections.actionEventsFragmentToCharactersFragment()
         findNavController().navigate(action)
-    }
-
-    private fun showSnackbar(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {

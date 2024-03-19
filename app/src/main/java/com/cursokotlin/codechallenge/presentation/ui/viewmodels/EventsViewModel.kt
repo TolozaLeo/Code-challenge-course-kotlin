@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cursokotlin.codechallenge.data.Result
-import com.cursokotlin.codechallenge.data.adapteritems.EventAdapterItem
+import com.cursokotlin.codechallenge.data.internal.adapteritems.EventAdapterItem
 import com.cursokotlin.codechallenge.data.internal.ServerError
 import com.cursokotlin.codechallenge.data.repository.AvengersRepository
 import com.cursokotlin.codechallenge.presentation.ui.viewmodels.uimodels.EventsUiModel

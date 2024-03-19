@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cursokotlin.codechallenge.data.Result
-import com.cursokotlin.codechallenge.data.adapteritems.CharacterAdapterItem
-import com.cursokotlin.codechallenge.data.adapteritems.ComicAdapterItem
 import com.cursokotlin.codechallenge.data.internal.ServerError
-import com.cursokotlin.codechallenge.data.internal.getGenericError
+import com.cursokotlin.codechallenge.data.internal.adapteritems.CharacterAdapterItem
+import com.cursokotlin.codechallenge.data.internal.adapteritems.ComicItem
 import com.cursokotlin.codechallenge.data.repository.AvengersRepository
 import com.cursokotlin.codechallenge.data.response.Character
 import com.cursokotlin.codechallenge.presentation.ui.viewmodels.uimodels.CharactersUiModel
@@ -32,9 +31,9 @@ class CharacterViewModel @Inject constructor(
     private var characterList = mutableListOf<CharacterAdapterItem>()
 
     fun getCharacters() = viewModelScope.launch(Dispatchers.IO){
+
         when(val result = avengersRepository.getCharacters(0)){
             is Result.Success -> {
-
                 characterList = result.data.data.results.map { characterResponse ->
                     CharacterAdapterItem(
                         id = characterResponse.id,
@@ -43,14 +42,13 @@ class CharacterViewModel @Inject constructor(
                                 ".${characterResponse.thumbnail.extension}",
                         name = characterResponse.name,
                         description = characterResponse.description,
-                        comic = characterResponse.comics.items.map {
-                            ComicAdapterItem(name = it.name)
-                        }
+                        comic = characterResponse.extractComicsList()
                     )
                 }.toMutableList()
 
                 emitUiModel(showCharactersList = Event(characterList))
             }
+
             is Result.Error ->{
                 emitUiModel(showError = Event(result.error))
             }
@@ -65,6 +63,13 @@ class CharacterViewModel @Inject constructor(
             showCharactersList = showCharactersList,
             showError = showError,
         )
+    }
+}
+
+private fun Character.extractComicsList(): List<ComicItem> {
+    return this.comics.items.map {
+        //TODO LOOK HOW TO EXTRACT THE YEAR
+        ComicItem(name = it.name, year = "2000")
     }
 }
 

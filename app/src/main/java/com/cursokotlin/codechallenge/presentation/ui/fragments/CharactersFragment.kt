@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cursokotlin.codechallenge.data.adapteritems.CharacterAdapterItem
+import com.cursokotlin.codechallenge.data.internal.adapteritems.CharacterAdapterItem
 import com.cursokotlin.codechallenge.databinding.FragmentHomeBinding
 import com.cursokotlin.codechallenge.presentation.ui.adapters.CharactersListAdapter
 import com.cursokotlin.codechallenge.presentation.ui.viewmodels.CharacterViewModel
@@ -17,7 +16,7 @@ import com.cursokotlin.codechallenge.presentation.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CharactersFragment  : Fragment() {
+class CharactersFragment  : BaseFragment(){
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -52,16 +51,29 @@ class CharactersFragment  : Fragment() {
             it.showCharactersList?.getContentIfNotHandled()?.let { list ->
                 setupRecyclerView(list)
             }
+            it.showError?.getContentIfNotHandled()?.let { error ->
+                showServerError(error)
+            }
         }
     }
 
     private fun setupRecyclerView(list: List<CharacterAdapterItem>) {
-        adapter = CharactersListAdapter()
+        adapter = CharactersListAdapter(this)
         adapter.submitList(list)
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    }
+
+    fun onClickCharacterListener(characterClicked: CharacterAdapterItem){
+        navigateToDescriptionFragment(characterClicked)
+    }
+
+    private fun navigateToDescriptionFragment(characterClicked: CharacterAdapterItem) {
+        val action = CharactersFragmentDirections
+            .actionCharactersFragmentToDescriptionFragment(characterClicked)
+        findNavController().navigate(action)
     }
 
     private fun navigateToEventsFragment() {

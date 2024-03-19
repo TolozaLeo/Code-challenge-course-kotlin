@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_charactersFragment"
             app:destination="@id/charactersFragment" />
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/charactersFragment"
         android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.CharactersFragment"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_charactersFragment_to_eventsFragment"
             app:destination="@id/eventsFragment" />
@@ -30,17 +30,20 @@
     <fragment
         android:id="@+id/eventsFragment"
         android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.EventsFragment"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_eventsFragment_to_charactersFragment"
-            app:destination="@id/charactersFragment"/>
+            app:destination="@id/charactersFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/charactersDescriptionFragment"
         android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.CharactersDescriptionFragment"
         android:label="fragment_description"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
+        <argument
+            android:name="characterData"
+            app:argType="com.cursokotlin.codechallenge.data.internal.adapteritems.CharacterAdapterItem" />
         <action
             android:id="@+id/action_CharactersDescriptionFragment_to_charactersFragment"
             app:destination="@id/charactersFragment"

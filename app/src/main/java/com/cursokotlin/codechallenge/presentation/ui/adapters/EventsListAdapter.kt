@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cursokotlin.codechallenge.data.adapteritems.CharacterAdapterItem
-import com.cursokotlin.codechallenge.data.adapteritems.EventAdapterItem
+import com.cursokotlin.codechallenge.data.internal.adapteritems.CharacterAdapterItem
+import com.cursokotlin.codechallenge.data.internal.adapteritems.EventAdapterItem
 import com.cursokotlin.codechallenge.databinding.ItemCharacterBinding
 
 //TODO ADD LISTENER

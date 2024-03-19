@@ -6,11 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.cursokotlin.codechallenge.data.adapteritems.CharacterAdapterItem
+import com.cursokotlin.codechallenge.data.internal.adapteritems.CharacterAdapterItem
 import com.cursokotlin.codechallenge.databinding.ItemCharacterBinding
+import com.cursokotlin.codechallenge.presentation.ui.fragments.CharactersFragment
 
 //TODO ADD LISTENER
-class CharactersListAdapter : ListAdapter<CharacterAdapterItem, CharactersListAdapter.CharacterViewHolder>(diffCallbackCharacters){
+class CharactersListAdapter(
+    private val listener: CharactersFragment
+): ListAdapter<CharacterAdapterItem, CharactersListAdapter.CharacterViewHolder>(diffCallbackCharacters){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val binding = ItemCharacterBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -21,14 +24,18 @@ class CharactersListAdapter : ListAdapter<CharacterAdapterItem, CharactersListAd
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.onBind(currentList[holder.adapterPosition])
+        holder.onBind(currentList[holder.adapterPosition], listener)
     }
 
     class CharacterViewHolder(private val binding: ItemCharacterBinding): RecyclerView.ViewHolder(binding.root){
-        fun onBind(item: CharacterAdapterItem){
+        fun onBind(item: CharacterAdapterItem, listener: CharactersFragment){
             binding.tvTitle.text = item.name
             binding.tvDescription.text = item.description
             Glide.with(binding.root.context).load(item.imageUrl).into(binding.imgCharacter)
+
+            binding.root.setOnClickListener{
+                listener.onClickCharacterListener(item)
+            }
         }
     }
 
@@ -42,4 +49,8 @@ private val diffCallbackCharacters = object : DiffUtil.ItemCallback<CharacterAda
     override fun areContentsTheSame(oldItem: CharacterAdapterItem, newItem: CharacterAdapterItem): Boolean {
         return (oldItem.id == newItem.id)
     }
+}
+
+interface characterListener{
+    fun onClickCharacterListener(item: CharacterAdapterItem)
 }
