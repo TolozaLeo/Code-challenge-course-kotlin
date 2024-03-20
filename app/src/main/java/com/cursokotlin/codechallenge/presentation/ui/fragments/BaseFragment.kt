@@ -24,7 +24,4 @@ open class BaseFragment : Fragment() {
         Toast.makeText(context, error.getErrorMessage(), Toast.LENGTH_LONG).show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }

@@ -39,7 +39,7 @@ class EventsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
-        viewModel.getEvents()
+//        viewModel.getEvents()
     }
 
     private fun setupObservers() {

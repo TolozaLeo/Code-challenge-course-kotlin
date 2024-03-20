@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cursokotlin.codechallenge.R
 import com.cursokotlin.codechallenge.data.internal.adapteritems.CharacterAdapterItem
 import com.cursokotlin.codechallenge.databinding.FragmentHomeBinding
 import com.cursokotlin.codechallenge.presentation.ui.adapters.CharactersListAdapter
@@ -54,7 +57,23 @@ class CharactersFragment  : BaseFragment(){
             it.showError?.getContentIfNotHandled()?.let { error ->
                 showServerError(error)
             }
+            it.showLoading?.getContentIfNotHandled()?.let { show ->
+                if(show)
+                    navigateToLoadingFragment()
+                else{
+                     dismissDialog()
+                }
+            }
         }
+    }
+
+    private fun dismissDialog() {
+        findNavController().navigateUp()
+    }
+
+    private fun navigateToLoadingFragment() {
+        val action = CharactersFragmentDirections.actionBaseFragmentToLoadingFragment()
+        findNavController().navigate(action)
     }
 
     private fun setupRecyclerView(list: List<CharacterAdapterItem>) {

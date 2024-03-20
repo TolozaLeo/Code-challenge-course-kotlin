@@ -25,6 +25,7 @@
         <action
             android:id="@+id/action_charactersFragment_to_descriptionFragment"
             app:destination="@id/charactersDescriptionFragment" />
+
     </fragment>
 
     <fragment
@@ -34,6 +35,7 @@
         <action
             android:id="@+id/action_eventsFragment_to_charactersFragment"
             app:destination="@id/charactersFragment" />
+
     </fragment>
 
     <fragment
@@ -49,5 +51,12 @@
             app:destination="@id/charactersFragment"
             app:popUpTo="@id/charactersFragment"/>
     </fragment>
+    <dialog
+        android:id="@+id/loadingFragment"
+        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.LoadingFragment"
+        android:label="LoadingFragment" />
 
+        <action
+            android:id="@+id/action_baseFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment" />
 </navigation>

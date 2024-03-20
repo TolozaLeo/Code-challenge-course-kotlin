@@ -28,27 +28,27 @@ class EventsViewModel @Inject constructor(
 
     private var eventsList = mutableListOf<EventAdapterItem>()
 
-    fun getEvents() = viewModelScope.launch(Dispatchers.IO){
-        when(val result = avengersRepository.getEvents(0)){
-            is Result.Success -> {
-
-                eventsList = result.data.data.results.map { eventsResponse ->
-                    EventAdapterItem(
-                        id = eventsResponse.id,
-                        imageUrl = eventsResponse.thumbnail.path.replaceHttpForHttps() +
-                                ".${eventsResponse.thumbnail.extension}",
-                        title = eventsResponse.title,
-                        description = eventsResponse.description,
-                    )
-                }.toMutableList()
-
-                emitUiModel(showEventsList = Event(eventsList))
-            }
-            is Result.Error ->{
-                emitUiModel(showError = Event(result.error))
-            }
-        }
-    }
+//    fun getEvents() = viewModelScope.launch(Dispatchers.IO){
+//        when(val result = avengersRepository.getEvents(0)){
+//            is Result.Success -> {
+//
+//                eventsList = result.data.data.results.map { eventsResponse ->
+//                    EventAdapterItem(
+//                        id = eventsResponse.id,
+//                        imageUrl = eventsResponse.thumbnail.path.replaceHttpForHttps() +
+//                                ".${eventsResponse.thumbnail.extension}",
+//                        title = eventsResponse.title,
+//                        description = eventsResponse.description,
+//                    )
+//                }.toMutableList()
+//
+//                emitUiModel(showEventsList = Event(eventsList))
+//            }
+//            is Result.Error ->{
+//                emitUiModel(showError = Event(result.error))
+//            }
+//        }
+//    }
 
     private suspend fun emitUiModel(
         showEventsList: Event<List<EventAdapterItem>>? = null,

@@ -24,4 +24,15 @@
         <item name="android:textColor">@color/gray</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="NoShadowDialogStyle">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
 </resources>
