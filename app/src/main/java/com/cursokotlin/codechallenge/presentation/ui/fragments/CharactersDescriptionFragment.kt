@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cursokotlin.codechallenge.R
-import com.cursokotlin.codechallenge.data.internal.adapteritems.ComicAdapterHeaderItem
 import com.cursokotlin.codechallenge.data.internal.adapteritems.ComicAdapterItem
-import com.cursokotlin.codechallenge.data.internal.adapteritems.ComicItem
 import com.cursokotlin.codechallenge.databinding.FragmentHomeBinding
-import com.cursokotlin.codechallenge.presentation.ui.adapters.ComicsListAdapter
+import com.cursokotlin.codechallenge.presentation.ui.adapters.ComicsAdapter
+import com.cursokotlin.codechallenge.presentation.ui.viewmodels.CharactersDescriptionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,9 +20,9 @@ class CharactersDescriptionFragment : BaseFragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-//    private val viewModel : CharacterDescriptionViewModel by viewModels()
+    private val viewModel : CharactersDescriptionViewModel by viewModels()
 
-    private lateinit var adapter: ComicsListAdapter
+    private lateinit var adapter: ComicsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,19 +35,23 @@ class CharactersDescriptionFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        TODO THIS FUNCTION CONVERTS THE characterData TO A comicAdapterItenm
-//        viewModel.setupData(args.characterData)
-        val comics = ComicItem("el hombre reloco(2000)", "2000")
-        setupRecyclerView(
-            ComicAdapterItem(
-                headerModel = ComicAdapterHeaderItem(R.string.lorem_ipsum.toString(), ""),
-                comics = listOf(comics)
-            )
-        )
+
+        setupObservers()
+        changeToolbarTitle(args.characterData.name)
+        viewModel.setupView(args.characterData)
     }
 
+    private fun setupObservers() {
+        viewModel.uiState.observe(viewLifecycleOwner){
+            it.showRecyclerView?.getContentIfNotHandled()?.let {characterDescription ->
+                setupRecyclerView(characterDescription)
+            }
+        }
+    }
+
+
     private fun setupRecyclerView(item: ComicAdapterItem) {
-        adapter = ComicsListAdapter(item)
+        adapter = ComicsAdapter(item)
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager =

@@ -48,7 +48,8 @@ class AvengersApi @Inject constructor(
         return@flow
     }
 
-    suspend fun getEvents(page: Int = 0): Result<EventsResponse> {
+    suspend fun getEvents(page: Int = 0): Flow<Result<EventsResponse>> = flow {
+        emit(Result.Loading(true))
         val hash = hashKey
         hash?.let {
             try {
@@ -57,13 +58,19 @@ class AvengersApi @Inject constructor(
                     offset = page * EVENTS_PER_PAGE,
                     publicApiKey = publicKey
                 )
-                return Result.Success(result)
+                emit(Result.Loading(false))
+                emit(Result.Success(result))
+                return@flow
             } catch (exception: Exception) {
                 handleHttpErrors.handleApiException(exception)
             }
-            return handleHttpErrors.handleApiException(Exception(""))
+            emit(Result.Loading(false))
+            emit(handleHttpErrors.handleApiException(Exception("")))
+            return@flow
         } ?: run {
-            return Result.Error((getGenericError("There was a problem to generate hash")))
+            emit(Result.Loading(false))
+            emit(Result.Error((getGenericError("There was a problem to generate hash"))))
+            return@flow
         }
     }
 }

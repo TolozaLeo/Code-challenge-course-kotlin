@@ -15,7 +15,6 @@ import com.cursokotlin.codechallenge.utils.Event
 import com.cursokotlin.codechallenge.utils.replaceHttpForHttps
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -56,7 +55,7 @@ class CharacterViewModel @Inject constructor(
                 }
 
                 is Result.Loading -> {
-                    emitUiModel(showLoading = Event(result.isLoading))
+                    emitUiModel(showLoading = result.isLoading)
                 }
             }
         }
@@ -65,7 +64,7 @@ class CharacterViewModel @Inject constructor(
     private suspend fun emitUiModel(
         showCharactersList: Event<List<CharacterAdapterItem>>? = null,
         showError: Event<ServerError>? = null,
-        showLoading: Event<Boolean>? = null,
+        showLoading: Boolean = false,
     ) = withContext(Dispatchers.Main) {
         _uiState.value = CharactersUiModel(
             showCharactersList = showCharactersList,

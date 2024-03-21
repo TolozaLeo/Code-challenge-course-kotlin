@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.cursokotlin.codechallenge.R
 import com.cursokotlin.codechallenge.databinding.ActivityMainBinding
 import com.cursokotlin.codechallenge.presentation.ui.viewmodels.MainViewModel
+import com.cursokotlin.codechallenge.presentation.ui.viewmodels.NavigationViewModel
 import com.cursokotlin.codechallenge.utils.gone
 import com.cursokotlin.codechallenge.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +18,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     private val mainViewModel: MainViewModel by viewModels()
+    private val navigationViewModel: NavigationViewModel by viewModels()
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -28,9 +31,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupObservers()
         setupToolbar()
         onItemOfBottomNavClicked()
     }
+
+    private fun setupObservers() {
+        navigationViewModel.uiState.observe(this){
+            it.changeToolbarTitle?.getContentIfNotHandled()?.let { title ->
+                changeToolbarTitle(title)
+            }
+        }
+    }
+
 
     private fun setupToolbar() {
         navController = getNavController()
@@ -39,29 +52,48 @@ class MainActivity : AppCompatActivity() {
             fallbackOnNavigateUpListener = ::onSupportNavigateUp
         )
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-        handleToolbarVisibility()
+        handleNavComponentsVisibility()
     }
 
-    private fun handleToolbarVisibility() {
+    private fun handleNavComponentsVisibility() {
+        binding.toolbar.title = getString(R.string.toolbar_title)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment -> shouldShowNavComponents(false)
+                R.id.loginFragment -> {
+                    hideToolbar()
+                    hideBottomNavigation()
+                }
+
+                R.id.charactersDescriptionFragment ->{
+                    showToolbar()
+                    hideBottomNavigation()
+                }
 
                 else -> {
-                    shouldShowNavComponents(true)
+                    showToolbar()
+                    showBottomNavigation()
                 }
             }
         }
     }
 
-    private fun shouldShowNavComponents(shouldShow: Boolean) {
-        if (shouldShow) {
-            binding.toolbar.visible()
-            binding.bottomNavigation.visible()
-        } else {
-            binding.toolbar.gone()
-            binding.bottomNavigation.gone()
-        }
+    private fun changeToolbarTitle(title: String) {
+        binding.toolbar.title = title
+    }
+
+    private fun hideBottomNavigation() {
+        binding.bottomNavigation.gone()
+    }
+
+    private fun showBottomNavigation(){
+        binding.bottomNavigation.visible()
+    }
+
+    private fun hideToolbar(){
+        binding.toolbar.gone()
+    }
+    private fun showToolbar(){
+        binding.toolbar.visible()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -70,6 +102,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+//      TODO CHANGE THE TO ACTION: NAVIGATE TO FRAGMENT, TO THE MAIN ACTIVITY AND ELIMINATE THE MAIN VIEWMODEL ON THE FRAGMENTS
     private fun onItemOfBottomNavClicked() {
         binding.bottomNavigation.setOnItemSelectedListener {
             mainViewModel.itemMenuClicked(it.itemId)

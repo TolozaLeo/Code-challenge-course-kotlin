@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
@@ -60,8 +60,7 @@ class LoginFragment : Fragment() {
             }
 
             uiModel.showError?.getContentIfNotHandled()?.let { error ->
-                showSnackbar(error.message)
-                showSnackbar(error.code.toString())
+                showServerError(error)
             }
         }
     }
@@ -69,10 +68,6 @@ class LoginFragment : Fragment() {
     private fun navigateToHome() {
         val action = LoginFragmentDirections.actionLoginFragmentToCharactersFragment()
         findNavController().navigate(action)
-    }
-
-    private fun showSnackbar(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

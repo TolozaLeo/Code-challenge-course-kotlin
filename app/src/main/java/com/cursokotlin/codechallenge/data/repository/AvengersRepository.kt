@@ -15,7 +15,7 @@ class AvengersRepository @Inject constructor(
         return api.getCharacters(page)
     }
 
-    suspend fun getEvents(page: Int = 0): Result<EventsResponse> {
+    suspend fun getEvents(page: Int = 0): Flow<Result<EventsResponse>> {
         return api.getEvents(page)
     }
 }

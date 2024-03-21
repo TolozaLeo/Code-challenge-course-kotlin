@@ -51,12 +51,4 @@
             app:destination="@id/charactersFragment"
             app:popUpTo="@id/charactersFragment"/>
     </fragment>
-    <dialog
-        android:id="@+id/loadingFragment"
-        android:name="com.cursokotlin.codechallenge.presentation.ui.fragments.LoadingFragment"
-        android:label="LoadingFragment" />
-
-        <action
-            android:id="@+id/action_baseFragment_to_loadingFragment"
-            app:destination="@id/loadingFragment" />
 </navigation>

@@ -57,23 +57,8 @@ class CharactersFragment  : BaseFragment(){
             it.showError?.getContentIfNotHandled()?.let { error ->
                 showServerError(error)
             }
-            it.showLoading?.getContentIfNotHandled()?.let { show ->
-                if(show)
-                    navigateToLoadingFragment()
-                else{
-                     dismissDialog()
-                }
-            }
+            if(it.showLoading) showLoadingAnimation() else hideLoadingAnimation()
         }
-    }
-
-    private fun dismissDialog() {
-        findNavController().navigateUp()
-    }
-
-    private fun navigateToLoadingFragment() {
-        val action = CharactersFragmentDirections.actionBaseFragmentToLoadingFragment()
-        findNavController().navigate(action)
     }
 
     private fun setupRecyclerView(list: List<CharacterAdapterItem>) {

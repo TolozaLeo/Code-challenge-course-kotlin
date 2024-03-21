@@ -39,7 +39,7 @@ class EventsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
-//        viewModel.getEvents()
+        viewModel.getEvents()
     }
 
     private fun setupObservers() {
@@ -53,9 +53,12 @@ class EventsFragment : BaseFragment() {
             it.showEventsList?.getContentIfNotHandled()?.let { eventsList ->
                 setupRecyclerView(eventsList)
             }
+
             it.showError?.getContentIfNotHandled()?.let { error ->
                 showServerError(error)
             }
+
+            if(it.showLoading) showLoadingAnimation() else hideLoadingAnimation()
         }
     }
 
