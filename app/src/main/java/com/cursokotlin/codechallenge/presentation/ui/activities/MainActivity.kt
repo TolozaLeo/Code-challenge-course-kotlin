@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setupToolbar() {
         navController = getNavController()
         appBarConfiguration = AppBarConfiguration(
@@ -56,7 +55,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleNavComponentsVisibility() {
-        binding.toolbar.title = getString(R.string.toolbar_title)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.loginFragment -> {
@@ -71,6 +69,7 @@ class MainActivity : AppCompatActivity() {
 
                 else -> {
                     showToolbar()
+                    binding.toolbar.title = getString(R.string.toolbar_title)
                     showBottomNavigation()
                 }
             }

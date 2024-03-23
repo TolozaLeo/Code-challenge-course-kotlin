@@ -12,6 +12,7 @@ import com.cursokotlin.codechallenge.data.repository.AvengersRepository
 import com.cursokotlin.codechallenge.data.response.Character
 import com.cursokotlin.codechallenge.presentation.ui.viewmodels.uimodels.CharactersUiModel
 import com.cursokotlin.codechallenge.utils.Event
+import com.cursokotlin.codechallenge.utils.findBetweenParenthesis
 import com.cursokotlin.codechallenge.utils.replaceHttpForHttps
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -76,8 +77,7 @@ class CharacterViewModel @Inject constructor(
 
 private fun Character.extractComicsList(): List<ComicItem> {
     return this.comics.items.map {
-        //TODO LOOK HOW TO EXTRACT THE YEAR
-        ComicItem(name = it.name, year = "2000")
+        ComicItem(name = it.name, year = it.name.findBetweenParenthesis())
     }
 }
 

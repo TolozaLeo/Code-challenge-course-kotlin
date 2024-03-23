@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.cursokotlin.codechallenge.R
 import com.cursokotlin.codechallenge.data.internal.ServerError
@@ -17,7 +18,7 @@ open class BaseFragment : Fragment() {
 
     private var loadingAnimation : View? = null
 
-    private val navigationViewModel: NavigationViewModel by viewModels()
+    private val navigationViewModel: NavigationViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
