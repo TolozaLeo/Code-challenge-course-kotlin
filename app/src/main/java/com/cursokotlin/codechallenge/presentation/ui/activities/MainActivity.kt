@@ -42,6 +42,23 @@ class MainActivity : AppCompatActivity() {
                 changeToolbarTitle(title)
             }
         }
+
+        mainViewModel.uiState.observe(this){
+            it.navigateToCharactersFragment?.getContentIfNotHandled()?.let {
+                navigateToCharactersFragment()
+            }
+            it.navigateToEventsFragment?.getContentIfNotHandled()?.let {
+                navigateToEventsFragment()
+            }
+        }
+    }
+
+    private fun navigateToEventsFragment() {
+        navController.navigate(R.id.eventsFragment)
+    }
+
+    private fun navigateToCharactersFragment() {
+        navController.navigate(R.id.charactersFragment)
     }
 
     private fun setupToolbar() {
@@ -65,11 +82,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.charactersDescriptionFragment ->{
                     showToolbar()
                     hideBottomNavigation()
+                    binding.toolbar.setNavigationIcon(R.drawable.icon_cancel_back)
                 }
 
                 else -> {
                     showToolbar()
-                    binding.toolbar.title = getString(R.string.toolbar_title)
+                    changeToolbarTitle(getString(R.string.toolbar_title))
                     showBottomNavigation()
                 }
             }

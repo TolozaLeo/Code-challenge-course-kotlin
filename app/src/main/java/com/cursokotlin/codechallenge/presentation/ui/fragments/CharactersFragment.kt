@@ -23,7 +23,6 @@ class CharactersFragment  : BaseFragment(){
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val mainViewModel : MainViewModel by activityViewModels()
     private val viewModel : CharacterViewModel by viewModels()
 
     private lateinit var adapter: CharactersListAdapter
@@ -45,11 +44,6 @@ class CharactersFragment  : BaseFragment(){
     }
 
     private fun setupObservers() {
-        mainViewModel.uiState.observe(viewLifecycleOwner){
-            it.navigateToEventsFragment?.getContentIfNotHandled()?.let {
-                navigateToEventsFragment()
-            }
-        }
         viewModel.uiState.observe(viewLifecycleOwner){
             it.showCharactersList?.getContentIfNotHandled()?.let { list ->
                 setupRecyclerView(list)
@@ -77,11 +71,6 @@ class CharactersFragment  : BaseFragment(){
     private fun navigateToDescriptionFragment(characterClicked: CharacterAdapterItem) {
         val action = CharactersFragmentDirections
             .actionCharactersFragmentToDescriptionFragment(characterClicked)
-        findNavController().navigate(action)
-    }
-
-    private fun navigateToEventsFragment() {
-        val action = CharactersFragmentDirections.actionCharactersFragmentToEventsFragment()
         findNavController().navigate(action)
     }
 

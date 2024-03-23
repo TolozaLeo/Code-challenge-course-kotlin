@@ -22,7 +22,6 @@ class EventsFragment : BaseFragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val mainViewModel : MainViewModel by activityViewModels()
     private val viewModel : EventsViewModel by viewModels()
 
     private lateinit var adapter : EventsListAdapter
@@ -43,12 +42,6 @@ class EventsFragment : BaseFragment() {
     }
 
     private fun setupObservers() {
-        mainViewModel.uiState.observe(viewLifecycleOwner){
-            it.navigateToCharactersFragment?.getContentIfNotHandled()?.let {
-                navigateToCharactersFragment()
-            }
-        }
-
         viewModel.uiState.observe(viewLifecycleOwner){
             it.showEventsList?.getContentIfNotHandled()?.let { eventsList ->
                 setupRecyclerView(eventsList)
@@ -69,11 +62,6 @@ class EventsFragment : BaseFragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-    }
-
-    private fun navigateToCharactersFragment() {
-        val action = EventsFragmentDirections.actionEventsFragmentToCharactersFragment()
-        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
