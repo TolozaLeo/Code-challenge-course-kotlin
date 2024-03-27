@@ -9,11 +9,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.cursokotlin.codechallenge.data.internal.adapteritems.CharacterAdapterItem
 import com.cursokotlin.codechallenge.data.internal.adapteritems.EventAdapterItem
 import com.cursokotlin.codechallenge.databinding.FragmentHomeBinding
 import com.cursokotlin.codechallenge.presentation.ui.adapters.EventsListAdapter
 import com.cursokotlin.codechallenge.presentation.ui.viewmodels.EventsViewModel
 import com.cursokotlin.codechallenge.presentation.ui.viewmodels.MainViewModel
+import com.cursokotlin.codechallenge.utils.EndlessScrollRecyclerListener
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,8 +46,12 @@ class EventsFragment : BaseFragment() {
 
     private fun setupObservers() {
         viewModel.uiState.observe(viewLifecycleOwner){
-            it.showEventsList?.getContentIfNotHandled()?.let { eventsList ->
-                setupRecyclerView(eventsList)
+            it.showEventsList?.getContentIfNotHandled()?.let { list ->
+                setupRecyclerView(list)
+            }
+
+            it.refreshEventsList?.getContentIfNotHandled()?.let { newList ->
+                updateRecyclerViewData(newList)
             }
 
             it.showError?.getContentIfNotHandled()?.let { error ->
@@ -60,8 +67,21 @@ class EventsFragment : BaseFragment() {
         adapter.submitList(eventsList)
 
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager =
+
+        val layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+        binding.recyclerView.layoutManager = layoutManager
+
+        binding.recyclerView.addOnScrollListener(object : EndlessScrollRecyclerListener(layoutManager){
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                viewModel.getEvents(page)
+            }
+        })
+    }
+
+    private fun updateRecyclerViewData(newList: List<EventAdapterItem>) {
+        adapter.submitList(newList)
     }
 
     override fun onDestroyView() {

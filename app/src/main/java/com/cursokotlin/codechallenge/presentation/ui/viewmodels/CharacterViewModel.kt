@@ -1,5 +1,6 @@
 package com.cursokotlin.codechallenge.presentation.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,24 +32,29 @@ class CharacterViewModel @Inject constructor(
 
     private var characterList = mutableListOf<CharacterAdapterItem>()
 
-    fun getCharacters() = viewModelScope.launch(Dispatchers.IO) {
+    fun getCharacters(page : Int = 0) = viewModelScope.launch(Dispatchers.IO) {
 
-        avengersRepository.getCharacters(0).collect { result ->
+        avengersRepository.getCharacters(page).collect { result ->
             when (result) {
                 is Result.Success -> {
-                    characterList = result.data.data.results.map { characterResponse ->
+                    val lastList = result.data.data.results.map { characterResponse ->
                         CharacterAdapterItem(
                             id = characterResponse.id,
-                            //replace http for https is required for glide library
+                            //replace http for https is necessary for glide library
                             imageUrl = characterResponse.thumbnail.path.replaceHttpForHttps() +
                                     ".${characterResponse.thumbnail.extension}",
                             name = characterResponse.name,
                             description = characterResponse.description,
                             comic = characterResponse.extractComicsList()
                         )
-                    }.toMutableList()
+                    }
 
-                    emitUiModel(showCharactersList = Event(characterList))
+                    characterList.addAll(lastList)
+
+                    if(page == 0) emitUiModel(showCharactersList = Event(characterList.toList()))
+                    else {
+                        emitUiModel(refreshCharactersList = Event(characterList.toList()))
+                    }
                 }
 
                 is Result.Error -> {
@@ -64,11 +70,13 @@ class CharacterViewModel @Inject constructor(
 
     private suspend fun emitUiModel(
         showCharactersList: Event<List<CharacterAdapterItem>>? = null,
+        refreshCharactersList: Event<List<CharacterAdapterItem>>? = null,
         showError: Event<ServerError>? = null,
         showLoading: Boolean = false,
     ) = withContext(Dispatchers.Main) {
         _uiState.value = CharactersUiModel(
             showCharactersList = showCharactersList,
+            refreshCharactersList = refreshCharactersList,
             showError = showError,
             showLoading = showLoading,
         )

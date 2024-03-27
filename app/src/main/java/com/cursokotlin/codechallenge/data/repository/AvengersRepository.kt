@@ -11,11 +11,11 @@ import javax.inject.Inject
 class AvengersRepository @Inject constructor(
     private val api: AvengersApi
 ){
-    suspend fun getCharacters(page: Int = 0): Flow<Result<CharactersResponse>> {
+    suspend fun getCharacters(page: Int): Flow<Result<CharactersResponse>> {
         return api.getCharacters(page)
     }
 
-    suspend fun getEvents(page: Int = 0): Flow<Result<EventsResponse>> {
+    suspend fun getEvents(page: Int): Flow<Result<EventsResponse>> {
         return api.getEvents(page)
     }
 }

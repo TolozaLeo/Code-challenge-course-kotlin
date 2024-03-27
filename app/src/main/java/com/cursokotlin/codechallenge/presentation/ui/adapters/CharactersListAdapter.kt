@@ -10,7 +10,6 @@ import com.cursokotlin.codechallenge.data.internal.adapteritems.CharacterAdapter
 import com.cursokotlin.codechallenge.databinding.ItemCharacterBinding
 import com.cursokotlin.codechallenge.presentation.ui.fragments.CharactersFragment
 
-//TODO ADD LISTENER
 class CharactersListAdapter(
     private val listener: CharactersFragment
 ): ListAdapter<CharacterAdapterItem, CharactersListAdapter.CharacterViewHolder>(diffCallbackCharacters){
@@ -38,7 +37,6 @@ class CharactersListAdapter(
             }
         }
     }
-
 }
 
 private val diffCallbackCharacters = object : DiffUtil.ItemCallback<CharacterAdapterItem>() {
@@ -47,10 +45,6 @@ private val diffCallbackCharacters = object : DiffUtil.ItemCallback<CharacterAda
     }
 
     override fun areContentsTheSame(oldItem: CharacterAdapterItem, newItem: CharacterAdapterItem): Boolean {
-        return (oldItem.id == newItem.id)
+        return (oldItem == newItem)
     }
-}
-
-interface characterListener{
-    fun onClickCharacterListener(item: CharacterAdapterItem)
 }

@@ -6,6 +6,7 @@ import com.cursokotlin.codechallenge.utils.Event
 
 data class EventsUiModel (
     val showEventsList: Event<List<EventAdapterItem>>? = null,
+    val refreshEventsList: Event<List<EventAdapterItem>>? = null,
     val showError: Event<ServerError?>? = null,
     val showLoading: Boolean = false,
 )

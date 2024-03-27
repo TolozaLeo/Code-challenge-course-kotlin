@@ -6,7 +6,6 @@ import com.google.android.material.snackbar.Snackbar
 fun View?.visible() {
     this?.visibility = View.VISIBLE
 }
-
 fun View?.gone() {
     this?.visibility = View.GONE
 }

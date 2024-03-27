@@ -18,7 +18,7 @@ interface AvengersApiService {
         @Query("ts") ts: Long = TIME_STAMP,
         @Query("apikey") publicApiKey: String,
         @Query("hash") hash: String,
-        @Query("offset") offset: Int = 0,// a partir de que elemento se pide
+        @Query("offset") offset: Int,// a partir de que elemento se pide
         @Query("limit") limit: Int = CHARACTERS_PER_PAGE,
     ) : CharactersResponse
 
@@ -27,7 +27,7 @@ interface AvengersApiService {
         @Query("ts") ts: Long = TIME_STAMP,
         @Query("apikey") publicApiKey: String,
         @Query("hash") hash: String,
-        @Query("offset") offset: Int = 0,
+        @Query("offset") offset: Int,
         @Query("limit") limit: Int = EVENTS_PER_PAGE,
         @Query("orderBy") orderBy: String = START_DATE
     ) : EventsResponse

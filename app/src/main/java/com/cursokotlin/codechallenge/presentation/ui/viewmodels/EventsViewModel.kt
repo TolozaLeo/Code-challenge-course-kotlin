@@ -28,12 +28,12 @@ class EventsViewModel @Inject constructor(
 
     private var eventsList = mutableListOf<EventAdapterItem>()
 
-    fun getEvents() = viewModelScope.launch(Dispatchers.IO) {
+    fun getEvents(page: Int = 0) = viewModelScope.launch(Dispatchers.IO) {
 
-        avengersRepository.getEvents(0).collect() { result ->
+        avengersRepository.getEvents(page).collect { result ->
             when (result) {
                 is Result.Success -> {
-                    eventsList = result.data.data.results.map { eventsResponse ->
+                    val newList = result.data.data.results.map { eventsResponse ->
                         EventAdapterItem(
                             id = eventsResponse.id,
                             imageUrl = eventsResponse.thumbnail.path.replaceHttpForHttps() +
@@ -41,9 +41,12 @@ class EventsViewModel @Inject constructor(
                             title = eventsResponse.title,
                             description = eventsResponse.description,
                         )
-                    }.toMutableList()
+                    }
 
-                    emitUiModel(showEventsList = Event(eventsList))
+                    eventsList.addAll(newList)
+
+                    if(page == 0) emitUiModel(showEventsList = Event(eventsList.toList()))
+                    else emitUiModel(refreshEventsList = Event(eventsList.toList()))
                 }
 
                 is Result.Error -> {
@@ -59,11 +62,13 @@ class EventsViewModel @Inject constructor(
 
     private suspend fun emitUiModel(
         showEventsList: Event<List<EventAdapterItem>>? = null,
+        refreshEventsList: Event<List<EventAdapterItem>>? = null,
         showError: Event<ServerError>? = null,
         showLoading: Boolean = false,
     ) = withContext(Dispatchers.Main) {
         _uiState.value = EventsUiModel(
             showEventsList = showEventsList,
+            refreshEventsList = refreshEventsList,
             showError = showError,
             showLoading = showLoading,
         )

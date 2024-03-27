@@ -6,6 +6,7 @@ import com.cursokotlin.codechallenge.utils.Event
 
 data class CharactersUiModel(
     val showCharactersList: Event<List<CharacterAdapterItem>>? = null,
+    val refreshCharactersList: Event<List<CharacterAdapterItem>>? = null,
     val showError: Event<ServerError?>? = null,
     val showLoading: Boolean = false,
 )

@@ -23,14 +23,14 @@ class AvengersApi @Inject constructor(
 
     private val publicKey = PUBLIC_KEY_AVENGERS_API
 
-    suspend fun getCharacters(page: Int = 0): Flow<Result<CharactersResponse>> = flow {
+    suspend fun getCharacters(page: Int): Flow<Result<CharactersResponse>> = flow {
         emit(Result.Loading(true))
         val hash = hashKey
         hash?.let {
             try {
                 val result = api.getCharacters(
                     hash = hash,
-                    offset = page * CHARACTERS_PER_PAGE,
+                    offset = (page * CHARACTERS_PER_PAGE),
                     publicApiKey = publicKey
                 )
                 emit(Result.Loading(false))
