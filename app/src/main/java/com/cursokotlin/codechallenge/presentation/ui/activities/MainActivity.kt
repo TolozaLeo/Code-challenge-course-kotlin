@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
             fallbackOnNavigateUpListener = ::onSupportNavigateUp
         )
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.bottomNavigation.itemIconTintList = null
         handleNavComponentsVisibility()
     }
 
@@ -117,9 +118,7 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(R.id.charactersFragment)
         return true
     }
-
-
-//      TODO CHANGE THE TO ACTION: NAVIGATE TO FRAGMENT, TO THE MAIN ACTIVITY AND ELIMINATE THE MAIN VIEWMODEL ON THE FRAGMENTS
+    
     private fun onItemOfBottomNavClicked() {
         binding.bottomNavigation.setOnItemSelectedListener {
             mainViewModel.itemMenuClicked(it.itemId)

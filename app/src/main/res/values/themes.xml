@@ -1,10 +1,8 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="Theme.AvengersApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/purple</item>
-
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
